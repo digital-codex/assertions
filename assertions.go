@@ -2,6 +2,7 @@ package assertions
 
 import (
 	"fmt"
+	"reflect"
 	"strings"
 	"testing"
 )
@@ -13,14 +14,20 @@ type Executable func() (string, bool)
  *****************************************************************************/
 
 func AssertBoolEquals(tb testing.TB, expected, actual bool, msg string) {
-	if !assertEquals(expected, actual) {
+	if expected != actual {
 		tb.Fatalf(msg+" - expected=%t, actual=%t", expected, actual)
 	}
 }
 
 func AssertStringEquals(tb testing.TB, expected, actual, msg string) {
-	if !assertEquals(expected, actual) {
+	if expected != actual {
 		tb.Fatalf(msg+" - expected=%s, actual=%s", expected, actual)
+	}
+}
+
+func AssertStructEquals(tb testing.TB, expected, actual interface{}, msg string) {
+	if !reflect.DeepEqual(expected, actual) {
+		tb.Fatalf(msg+" - expected=%+v, actual=%+v", expected, actual)
 	}
 }
 
@@ -40,7 +47,3 @@ func AssertAll(tb testing.TB, msg string, executables ...Executable) {
 /*****************************************************************************
  *                             PRIVATE FUNCTIONS                             *
  *****************************************************************************/
-
-func assertEquals(expected, actual interface{}) bool {
-	return expected == actual
-}
