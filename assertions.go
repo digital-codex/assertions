@@ -82,7 +82,7 @@ func AssertTypeOf(tb testing.TB, expected reflect.Type, actual any, msg string) 
 		}
 	case reflect.Ptr:
 		if expected.Elem() != rt {
-			tb.Fatalf("%s: expected=%s, actual=%s", msg, expected.Name(), rt.Name())
+			tb.Fatalf("%s: expected=%s, actual=%s", msg, expected.Elem().Name(), rt.Name())
 		}
 	case reflect.Interface:
 		if !rt.Implements(expected) {
