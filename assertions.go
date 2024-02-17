@@ -11,7 +11,13 @@ import (
 
 func AssertNotNull(tb testing.TB, actual any, msg string) {
 	if isNil(actual) {
-		tb.Fatalf("%s: expected not %+v", msg, actual)
+		tb.Fatalf("%s: expected not <%v>", msg, actual)
+	}
+}
+
+func AssertNotEquals(tb testing.TB, unexpected, actual any, msg string) {
+	if unexpected == actual {
+		tb.Fatalf("%s: not equal but was <%v>", msg, unexpected)
 	}
 }
 
@@ -35,19 +41,19 @@ func AssertInt64Equals(tb testing.TB, expected, actual int64, msg string) {
 
 func AssertStringEquals(tb testing.TB, expected, actual, msg string) {
 	if expected != actual {
-		tb.Fatalf("%s: expected=%s, actual=%s", msg, expected, actual)
+		tb.Fatalf("%s: expected=%q, actual=%q", msg, expected, actual)
 	}
 }
 
 func AssertEquals(tb testing.TB, expected, actual any, msg string) {
 	if expected != actual {
-		tb.Fatalf("%s: expected=%+v, actual=%+v", msg, expected, actual)
+		tb.Fatalf("%s: expected=%v, actual=%v", msg, expected, actual)
 	}
 }
 
 func AssertDeepEquals(tb testing.TB, expected, actual any, msg string) {
 	if !reflect.DeepEqual(expected, actual) {
-		tb.Fatal("%s: expected=%+v, actual=%+v", msg, expected, actual)
+		tb.Fatalf("%s: expected=%v, actual=%v", msg, expected, actual)
 	}
 }
 
