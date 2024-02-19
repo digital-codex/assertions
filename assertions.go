@@ -39,6 +39,12 @@ func AssertInt64Equals(tb testing.TB, expected, actual int64, msg string) {
 	}
 }
 
+func AssertFloat64Equals(tb testing.TB, expected, actual float64, msg string) {
+	if expected != actual {
+		tb.Fatalf("%s: expected=%d, actual=%d", msg, expected, actual)
+	}
+}
+
 func AssertStringEquals(tb testing.TB, expected, actual, msg string) {
 	if expected != actual {
 		tb.Fatalf("%s: expected=%q, actual=%q", msg, expected, actual)
